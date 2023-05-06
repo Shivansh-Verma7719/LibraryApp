@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h1>Search Results</h1>
+    {% if books %}
+    <p class="lead">{{ length }} results found for "{{ query }}" <span style="float: right;">Results on this page: {{ books|length }}</span></p>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Publication Date</th>
+                        <th>ISBN</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.publisher }}</td>
+                        <td>{{ book.publication_date }}</td>
+                        <td>{{ book.isbn }}</td>
+                        <td>{{ book.category }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+
+    <div class="pagination justify-content-center">
+        <span>
+            {% if books.has_previous %}
+            <a href="/search_results/{{ query }}/1">&laquo; first</a>
+            <a href="/search_results/{{ query }}/{{ books.previous_page_number }}">&lsaquo; previous</a>
+            {% endif %}
+
+            <span class="current-page">
+                Page {{ books.number }} of {{ books.paginator.num_pages }}.
+            </span>
+
+            {% if books.has_next %}
+            <a href="/search_results/{{ query }}/{{ books.next_page_number }}">next &rsaquo;</a>
+            <a href="/search_results/{{ query }}/{{ books.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+        <br>
+        <br>
+    </div>
+    {% else %}
+    <p>No results found for "{{ query }}".</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

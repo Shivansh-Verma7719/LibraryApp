@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block title %}Library App{% endblock %}
+
+{% block content %}
+
+<br>
+{% if messages %}
+    
+    {% for message in messages %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+        {% endfor %}
+{% endif %}
+
+<h1>Book List</h1>
+<table class="table list">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Publisher</th>
+            <th>Publication Date</th>
+            <th>ISBN</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.publisher }}</td>
+            <td>{{ book.publication_date }}</td>
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.category }}</td>
+            <td>
+                <a href="{% url 'update_book' id=book.book_id %}"><button class="Btn">Edit</button></a>
+                <a href="{% url 'delete_book' id=book.book_id %}"><button class="Btn Del">Delete</button></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
